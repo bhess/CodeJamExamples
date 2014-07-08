@@ -1,7 +1,7 @@
 import org.saddle._
-
 /**
  * Created by i065873 on 08/07/14.
+ * https://code.google.com/codejam/contest/2994486/dashboard
  */
 object TheRepeater {
   def removeDuplicates(in: String): String = in.foldRight(("",'$'))((right: Char, current: (String, Char)) => if (right == current._2) (current._1, right) else (right + current._1, right))._1
