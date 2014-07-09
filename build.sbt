@@ -2,7 +2,9 @@ name := "CodeJamExamples"
 
 version := "1.0"
 
-mainClass in (Compile, run) := Some("TheRepeater")
+showSuccess := false
+
+mainClass in (Compile, run) := Some("PartElf")
 
 libraryDependencies ++= Seq(
   "org.scala-saddle" %% "saddle-core" % "1.3.+"
