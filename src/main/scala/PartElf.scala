@@ -1,5 +1,6 @@
 /**
  * Created by i065873 on 09/07/14.
+ * https://code.google.com/codejam/contest/3004486/dashboard
  */
 import scala.math._
 object PartElf {
