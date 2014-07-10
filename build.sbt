@@ -4,7 +4,7 @@ version := "1.0"
 
 showSuccess := false
 
-mainClass in (Compile, run) := Some("DataPacking")
+mainClass in (Compile, run) := Some("SavingTheUniverse")
 
 libraryDependencies ++= Seq(
   "org.scala-saddle" %% "saddle-core" % "1.3.+"
