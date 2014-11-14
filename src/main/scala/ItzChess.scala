@@ -2,6 +2,7 @@ import scala.collection.mutable.ArrayBuffer
 
 /**
  * Created by i065873 on 14/11/14.
+ * https://code.google.com/codejam/contest/6214486/dashboard#s=p3
  */
 object ItzChess extends App {
   val lettermap = Map('A' -> 8, 'B' -> 7, 'C' -> 6, 'D' -> 5, 'E' -> 4, 'F' -> 3, 'G' -> 2, 'H' -> 1 )
