@@ -4,7 +4,7 @@ version := "1.0"
 
 showSuccess := false
 
-mainClass in (Compile, run) := Some("CubeIV")
+mainClass in (Compile, run) := Some("GBus")
 
 libraryDependencies ++= Seq(
   "org.scala-saddle" %% "saddle-core" % "1.3.+"
