@@ -38,8 +38,8 @@ object TakingMetro extends App {
         val conn = readLine.
           split(" ").
           map(_.toInt) match { case Array(m1, s1, m2, s2, d) => Station(m1, s1, false) ~ Station(m2, s2, false) % d}
-      conn :: ll
-    }).
+          conn :: ll
+      }).
       groupBy(e => (e._1, e._2)).
       mapValues(e => e.reduceLeft((left, current) => if (left.weight < current.weight) left else current)).
       values.
