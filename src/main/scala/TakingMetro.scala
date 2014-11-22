@@ -41,7 +41,7 @@ object TakingMetro extends App {
           conn :: ll
       }).
       groupBy(e => (e._1, e._2)).
-      mapValues(e => e.reduceLeft((left, current) => if (left.weight < current.weight) left else current)).
+      mapValues(_.reduceLeft((left, current) => if (left.weight < current.weight) left else current)).
       values.
       toList
 
