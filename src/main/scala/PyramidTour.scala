@@ -44,11 +44,6 @@ object PyramidTour {
       map(_.map(i => i._1 -> (i._2, i._3)).toMap)
   }
 
-  //trait Field {
-  //  def isValid(p: Piece, o: Orientation): Boolean
-  //  val i: Int
-  //  val j: Int
-  //}
   case class Field(i: Int, j: Int) {
     def isValid(p: Piece, o: Orientation): Boolean = (p, o) match {
       case (Three(), Up())    => i == 3
@@ -114,10 +109,6 @@ object PyramidTour {
 
   val board: Map[Field, Set[(Piece, Orientation)]] = boardlist.map(i => Field(i._1, i._2)).map(i => (i -> pieces.filter(j => i.isValid(j._1, j._2)).toSet)).toMap
 
-  //println(board.foldLeft(BigInt(1))((left, item) => left * BigInt(item._2.size)))
-  //println(board(Field(0, 0)))
-
-
   def next(f: Field, p: Piece, o: Orientation): Field = (p, o) match {
     case (Three(), Up())    => Field(f.i - 3, f.j    )
     case (Three(), Right()) => Field(f.i    , f.j + 3)
@@ -133,7 +124,6 @@ object PyramidTour {
     case (One()  , Down())  => Field(f.i + 1, f.j    )
   }
 
-  // look at hint for stack
   /**
    *
    * @param emptyFields: fields that are still available. if none is available, the solution is found
@@ -167,23 +157,6 @@ object PyramidTour {
             availablePieces: Map[Piece, Int],
             lastCaseException: Boolean, solutions: Set[List[(Field, Piece, Orientation)]]): Set[List[(Field, Piece, Orientation)]] = {
 
-    //if (placedFields.size == 1) {
-
-
-
-
-
-    //if (interlen > 12) {
-    //  println(interlen)
-    //  println(s"empty field: $emptyFields")
-    //  println(s"Placed field: $placedFields")
-    //  println(s"available options: $availableOptions")
-    //  println(s"available pieces: $availablePieces")
-    //  println
-    //}
-
-
-
 
     def validPlacementForNextField(nextField: Field): Option[(Piece, Orientation)] = {
       availablePieces.
@@ -211,21 +184,11 @@ object PyramidTour {
       case (i, j)                   => (i, j)
     }
 
-    def case21(currentFieldNextPiece: Piece, currentFieldNextOrientation: Orientation, currentField: Field) = {
-      //println("case2.1")
-      case41(currentFieldNextPiece, currentFieldNextOrientation, currentField)
+    def case21(currentFieldNextPiece: Piece, currentFieldNextOrientation: Orientation, currentField: Field) = case41(currentFieldNextPiece, currentFieldNextOrientation, currentField)
 
-    }
-    def case22(currentField: Field) = {
-      //println("case2.2")
-      case42(currentField)
-    }
+    def case22(currentField: Field) = case42(currentField)
 
     def case41(currentFieldNextPiece: Piece, currentFieldNextOrientation: Orientation, currentField: Field) = {
-      // empty fields are the same...
-      // placed fields: remove head, add current new one
-      //println("case4.1")
-
       val placedFieldsNext = (currentField, currentFieldNextPiece, currentFieldNextOrientation) :: placedFields.tail
       val availableOptionsNext = (availableOptions.head - ((currentFieldNextPiece, currentFieldNextOrientation))) :: availableOptions.tail
       val currentPiece = placedFields.head._2
@@ -251,23 +214,11 @@ object PyramidTour {
       (emptyFieldsNext, placedFieldsNext, availableOptionsNext, availablePiecesNext, true)
     }
 
-    /*
-    next field is not taken and there is a valid piece available for the next field
-     another piece is available for the current position?
-      */
     def case3(nextField: Field, nextPiece: Piece, nextOrientation: Orientation) = {
-      //println("case3")
-
-
-
       val currentAvailableOptions = availableOptions.head
-      //val (pieceToTake, orientationToTake) = currentAvailableOptions.head
-
       val emptyFieldsNext = emptyFields - nextField
       val placedFieldsNext = (nextField, nextPiece, nextOrientation) :: placedFields
       val availablePiecesNxt = availablePiecesNext(nextPiece)
-
-
 
       val availableOptionsNext = availableOptionsAt(
         nextField,
@@ -277,17 +228,7 @@ object PyramidTour {
       (emptyFieldsNext, placedFieldsNext, availableOptionsNext, availablePiecesNxt, false)
     }
 
-    //if (emptyFields.size == 0) {
-    //  placedFields.head match {
-    //    case (Field(i, j), p, o) if i == 0 || j == 0 => println(s"$i, $j, $p, $o")
-    //    case _ =>
-    //  }
-    //}
-
     placedFields match {
-      //case (Field(i, j), p, o) :: xs if (emptyFields.size == 0 && next(Field(i, j), p, o) == Field(0,0)) =>
-      //  // case 1)
-      //  placedFields
       case (Field(i, j), p, o) :: xs =>
         val sol = if (emptyFields.size == 0 && next(Field(i, j), p, o) == Field(0,0)) solutions + placedFields else solutions
 
@@ -296,11 +237,11 @@ object PyramidTour {
           val currentAvailableOptions = availableOptions.head
           val (emptyFieldsNext, placedFieldsNext, availableOptionsNext, availablePiecesNext, exception) =
             if (currentAvailableOptions.exists(x => p == x._1 || availablePieces(x._1) > 0)) {
-              // 2.1)
+              // case 2.1)
               val (nextPiece, nextOrientation) = currentAvailableOptions.filter(x => p == x._1 || availablePieces(x._1) > 0).head
               case21(nextPiece, nextOrientation, Field(i, j))
             } else {
-              // 2.2)
+              // case 2.2)
               case22(Field(i, j))
             }
           pyramidTour(emptyFieldsNext, placedFieldsNext, availableOptionsNext, availablePiecesNext, exception, sol)
