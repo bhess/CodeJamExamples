@@ -6,7 +6,7 @@ version := "1.0"
 
 showSuccess := false
 
-mainClass in (Compile, run) := Some("RecycledNumbers")
+mainClass in (Compile, run) := Some("DancingWithGooglers")
 
 libraryDependencies ++= Seq(
   "org.scala-saddle" %% "saddle-core" % "1.3.+"
